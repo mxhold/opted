@@ -22,7 +22,26 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+# BEGIN
+
+# This gem doesn't polute the top-level namespace
+# so it can be handy to alias the classes
+ok = Opted::Result::Ok
+err = Opted::Result::Err
+
+def assert(value)
+  fail "Invalid assertion in README code sample" unless value
+end
+
+assert ok.new(1).unwrap! == 1
+
+begin
+  err.new("whoops").unwrap!
+rescue => e
+  assert e.message == "Called #unwrap! on Err: whoops"
+end
+```
 
 ## Development
 

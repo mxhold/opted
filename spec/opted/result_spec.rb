@@ -36,7 +36,7 @@ RSpec.describe Opted::Result do
       it "raises an UnwrapError" do
         expect do
           err.new("error").unwrap!
-        end.to raise_error(RuntimeError, "error")
+        end.to raise_error(Opted::Result::UnwrapError)
       end
     end
   end

@@ -1,5 +1,11 @@
 module Opted
   module Result
+    class UnwrapError < RuntimeError
+      def initialize(error)
+        super("Called #unwrap! on Err: #{error}")
+      end
+    end
+
     class Ok
       def initialize(value)
         @value = value
@@ -24,7 +30,7 @@ module Opted
       end
 
       def unwrap!
-        fail RuntimeError, @error
+        fail UnwrapError, @error
       end
     end
   end
