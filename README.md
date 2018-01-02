@@ -22,9 +22,8 @@ Or install it yourself as:
 
 ## Usage
 
+<!-- BEGIN CODE SAMPLE -->
 ```ruby
-# BEGIN
-
 # This gem doesn't polute the top-level namespace
 # so it can be handy to alias the classes
 ok = Opted::Result::Ok

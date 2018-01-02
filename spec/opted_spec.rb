@@ -6,7 +6,7 @@ RSpec.describe Opted do
   describe "README code sample" do
     it "evaluates without error" do
       readme_text = File.read(File.join(__dir__, "..", "README.md"))
-      code_sample = readme_text.match(/#{Regexp.escape("# BEGIN")}(.*?)#{Regexp.escape("```")}/m)[1]
+      code_sample = readme_text.match(/#{Regexp.escape("<!-- BEGIN CODE SAMPLE -->\n```ruby")}(.*?)#{Regexp.escape("```")}/m)[1]
       eval(code_sample)
     end
   end
