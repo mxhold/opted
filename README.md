@@ -26,17 +26,17 @@ Or install it yourself as:
 ```ruby
 # This gem doesn't polute the top-level namespace
 # so it can be handy to alias the classes
-ok = Opted::Result::Ok
-err = Opted::Result::Err
+Ok = Opted::Result::Ok
+Err = Opted::Result::Err
 
 def assert(value)
   fail "Invalid assertion in README code sample" unless value
 end
 
-assert ok.new(1).unwrap! == 1
+assert Ok.new(1).unwrap! == 1
 
 begin
-  err.new("whoops").unwrap!
+  Err.new("whoops").unwrap!
 rescue => e
   assert e.message == "Called #unwrap! on Err: whoops"
 end
