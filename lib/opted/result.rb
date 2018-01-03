@@ -14,7 +14,7 @@ module Opted
       end
 
       def unwrap_err!
-        fail "Called #unwrap_err! on Ok(#{@value.inspect})"
+        fail "Called #unwrap_err! on #{self.class}(#{@value.inspect})"
       end
 
       def match(&block)
@@ -35,7 +35,7 @@ module Opted
       end
 
       def unwrap!
-        fail "Called #unwrap! on Err(#{@error.inspect})"
+        fail "Called #unwrap! on #{self.class}(#{@error.inspect})"
       end
 
       def unwrap_err!

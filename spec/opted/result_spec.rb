@@ -25,7 +25,7 @@ RSpec.describe Opted::Result do
       it "raises an error" do
         expect do
           Opted::Result::Ok.new("hello").unwrap_err!
-        end.to raise_error(RuntimeError, "Called #unwrap_err! on Ok(\"hello\")")
+        end.to raise_error(RuntimeError, "Called #unwrap_err! on Opted::Result::Ok(\"hello\")")
       end
     end
 
@@ -60,7 +60,7 @@ RSpec.describe Opted::Result do
       it "raises an error" do
         expect do
           Opted::Result::Err.new(:whoops).unwrap!
-        end.to raise_error(RuntimeError, "Called #unwrap! on Err(:whoops)")
+        end.to raise_error(RuntimeError, "Called #unwrap! on Opted::Result::Err(:whoops)")
       end
     end
 

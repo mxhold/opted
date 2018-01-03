@@ -39,7 +39,7 @@ assert Ok.new(1).unwrap! == 1
 begin
   Err.new(:whoops).unwrap!
 rescue => e
-  assert e.message == "Called #unwrap! on Err(:whoops)"
+  assert e.message == "Called #unwrap! on Opted::Result::Err(:whoops)"
 end
 
 result = Ok.new(1)
