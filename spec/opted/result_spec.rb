@@ -35,7 +35,7 @@ RSpec.describe Opted::Result do
     describe "#match" do
       it "runs the ok block" do
         result = ok.new(1).match do
-          ok { |r| r + 1 }
+          ok { |value| value + 1 }
           err { fail "unreachable" }
         end
 
@@ -45,7 +45,7 @@ RSpec.describe Opted::Result do
       it "fails unless both ok and err block provided" do
         expect do
           ok.new(1).match do
-            ok { |r| r + 1 }
+            ok { |value| value + 1 }
           end
         end.to raise_error(RuntimeError, "Must match on both ok and err results")
       end

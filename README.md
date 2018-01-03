@@ -45,7 +45,7 @@ end
 result = Ok.new(1)
 
 unwrapped_result = result.match do
-  ok { |result| result + 1 }
+  ok { |value| value + 1 }
   err { |error| fail "unreachable" }
 end
 
