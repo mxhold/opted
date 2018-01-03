@@ -23,6 +23,33 @@ RSpec.describe Opted::Result do
         expect(ok.new(1).unwrap!).to eql(1)
       end
     end
+
+    describe "#unwrap_err!" do
+      it "raises an error" do
+        expect do
+          ok.new("hello").unwrap_err!
+        end.to raise_error(RuntimeError, "Called #unwrap_err! on Ok(\"hello\")")
+      end
+    end
+
+    describe "#match" do
+      it "runs the ok block" do
+        result = ok.new(1).match do |m|
+          m.ok { |r| r + 1 }
+          m.err { fail "unreachable" }
+        end
+
+        expect(result).to eql(2)
+      end
+
+      xit "fails unless both ok and err block provided" do
+        expect do
+          ok.new(1).match do |m|
+            m.ok { |r| r + 1 }
+          end
+        end.to raise_error(RuntimeError, "Must match on both ok and err results")
+      end
+    end
   end
 
   describe err do
@@ -33,10 +60,27 @@ RSpec.describe Opted::Result do
     end
 
     describe "#unwrap!" do
-      it "raises an UnwrapError" do
+      it "raises an error" do
         expect do
-          err.new("error").unwrap!
-        end.to raise_error(Opted::Result::UnwrapError)
+          err.new(:whoops).unwrap!
+        end.to raise_error(RuntimeError, "Called #unwrap! on Err(:whoops)")
+      end
+    end
+
+    describe "#unwrap_err!" do
+      it "returns the error" do
+        expect(err.new(:whoops).unwrap_err!).to eql(:whoops)
+      end
+    end
+
+    describe "#match" do
+      it "runs the err block" do
+        result = err.new(:whoops).match do |m|
+          m.ok { fail "unreachable" }
+          m.err { |error| "error is #{error}" }
+        end
+
+        expect(result).to eql("error is whoops")
       end
     end
   end

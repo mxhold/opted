@@ -29,6 +29,7 @@ Or install it yourself as:
 Ok = Opted::Result::Ok
 Err = Opted::Result::Err
 
+# This code sample is run as a part of this gem's test suite
 def assert(value)
   fail "Invalid assertion in README code sample" unless value
 end
@@ -36,10 +37,19 @@ end
 assert Ok.new(1).unwrap! == 1
 
 begin
-  Err.new("whoops").unwrap!
+  Err.new(:whoops).unwrap!
 rescue => e
-  assert e.message == "Called #unwrap! on Err: whoops"
+  assert e.message == "Called #unwrap! on Err(:whoops)"
 end
+
+result = Ok.new(1)
+
+unwrapped_result = result.match do |m|
+  m.ok { |result| result + 1 }
+  m.err { |error| fail "unreachable" }
+end
+
+assert unwrapped_result == 2
 ```
 
 ## Development

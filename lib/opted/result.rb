@@ -1,11 +1,5 @@
 module Opted
   module Result
-    class UnwrapError < RuntimeError
-      def initialize(error)
-        super("Called #unwrap! on Err: #{error}")
-      end
-    end
-
     class Ok
       def initialize(value)
         @value = value
@@ -17,6 +11,14 @@ module Opted
 
       def unwrap!
         @value
+      end
+
+      def unwrap_err!
+        fail "Called #unwrap_err! on Ok(#{@value.inspect})"
+      end
+
+      def match
+        yield OkMatch.new(@value)
       end
     end
 
@@ -30,7 +32,44 @@ module Opted
       end
 
       def unwrap!
-        fail UnwrapError, @error
+        fail "Called #unwrap! on Err(#{@error.inspect})"
+      end
+
+      def unwrap_err!
+        @error
+      end
+
+      def match
+        yield ErrMatch.new(@error)
+      end
+    end
+
+    class OkMatch
+      def initialize(value)
+        @value = value
+        @mapped_value = nil
+      end
+
+      def ok
+        @mapped_value = yield @value
+      end
+
+      def err
+        @mapped_value
+      end
+    end
+
+    class ErrMatch
+      def initialize(error)
+        @error = error
+        @mapped_error = nil
+      end
+
+      def ok
+      end
+
+      def err
+        @mapped_error = yield @error
       end
     end
   end
