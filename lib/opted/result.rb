@@ -17,9 +17,9 @@ module Opted
         fail "Called #unwrap_err! on Ok(#{@value.inspect})"
       end
 
-      def match
+      def match(&block)
         match = Match.new(self)
-        yield match
+        match.instance_eval(&block)
         match.mapped_result
       end
     end
@@ -41,9 +41,9 @@ module Opted
         @error
       end
 
-      def match
+      def match(&block)
         match = Match.new(self)
-        yield match
+        match.instance_eval(&block)
         match.mapped_result
       end
     end

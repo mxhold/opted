@@ -34,9 +34,9 @@ RSpec.describe Opted::Result do
 
     describe "#match" do
       it "runs the ok block" do
-        result = ok.new(1).match do |m|
-          m.ok { |r| r + 1 }
-          m.err { fail "unreachable" }
+        result = ok.new(1).match do
+          ok { |r| r + 1 }
+          err { fail "unreachable" }
         end
 
         expect(result).to eql(2)
@@ -44,8 +44,8 @@ RSpec.describe Opted::Result do
 
       it "fails unless both ok and err block provided" do
         expect do
-          ok.new(1).match do |m|
-            m.ok { |r| r + 1 }
+          ok.new(1).match do
+            ok { |r| r + 1 }
           end
         end.to raise_error(RuntimeError, "Must match on both ok and err results")
       end
@@ -75,9 +75,9 @@ RSpec.describe Opted::Result do
 
     describe "#match" do
       it "runs the err block" do
-        result = err.new(:whoops).match do |m|
-          m.ok { fail "unreachable" }
-          m.err { |error| "error is #{error}" }
+        result = err.new(:whoops).match do
+          ok { fail "unreachable" }
+          err { |error| "error is #{error}" }
         end
 
         expect(result).to eql("error is whoops")
@@ -85,8 +85,8 @@ RSpec.describe Opted::Result do
 
       it "fails unless both ok and err block provided" do
         expect do
-          err.new(:whoops).match do |m|
-            m.err { |error| "error is #{error}" }
+          err.new(:whoops).match do
+            err { |error| "error is #{error}" }
           end
         end.to raise_error(RuntimeError, "Must match on both ok and err results")
       end

@@ -44,9 +44,9 @@ end
 
 result = Ok.new(1)
 
-unwrapped_result = result.match do |m|
-  m.ok { |result| result + 1 }
-  m.err { |error| fail "unreachable" }
+unwrapped_result = result.match do
+  ok { |result| result + 1 }
+  err { |error| fail "unreachable" }
 end
 
 assert unwrapped_result == 2
