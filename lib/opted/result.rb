@@ -1,5 +1,8 @@
 module Opted
   module Result
+    class UnwrapError < RuntimeError
+    end
+
     class Ok
       def initialize(value)
         @value = value
@@ -14,7 +17,7 @@ module Opted
       end
 
       def unwrap_err!
-        fail "Called #unwrap_err! on #{self.class}(#{@value.inspect})"
+        fail UnwrapError.new("Called #unwrap_err! on #{inspect}")
       end
 
       def match(&block)
@@ -35,7 +38,7 @@ module Opted
       end
 
       def unwrap!
-        fail "Called #unwrap! on #{self.class}(#{@error.inspect})"
+        fail UnwrapError.new("Called #unwrap! on #{inspect}")
       end
 
       def unwrap_err!
