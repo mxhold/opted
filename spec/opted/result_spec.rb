@@ -42,7 +42,7 @@ RSpec.describe Opted::Result do
         expect(result).to eql(2)
       end
 
-      xit "fails unless both ok and err block provided" do
+      it "fails unless both ok and err block provided" do
         expect do
           ok.new(1).match do |m|
             m.ok { |r| r + 1 }
@@ -81,6 +81,14 @@ RSpec.describe Opted::Result do
         end
 
         expect(result).to eql("error is whoops")
+      end
+
+      it "fails unless both ok and err block provided" do
+        expect do
+          err.new(:whoops).match do |m|
+            m.err { |error| "error is #{error}" }
+          end
+        end.to raise_error(RuntimeError, "Must match on both ok and err results")
       end
     end
   end
