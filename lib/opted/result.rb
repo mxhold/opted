@@ -18,9 +18,9 @@ module Opted
       end
 
       def match
-        match = OkMatch.new(@value)
+        match = Match.new(self)
         yield match
-        match.result
+        match.mapped_result
       end
     end
 
@@ -42,52 +42,34 @@ module Opted
       end
 
       def match
-        match = ErrMatch.new(@error)
+        match = Match.new(self)
         yield match
-        match.result
+        match.mapped_result
       end
     end
 
-    class OkMatch
-      def initialize(value)
-        @value = value
+    class Match
+      def initialize(result)
+        @result = result
       end
 
       def ok
         @ok_called = true
-        @result = yield @value
-      end
-
-      def err
-        @err_called = true
-      end
-
-      def result
-        if @ok_called && @err_called
-          @result
-        else
-          fail "Must match on both ok and err results"
+        if @result.ok?
+          @mapped_result = yield @result.unwrap!
         end
       end
-    end
-
-    class ErrMatch
-      def initialize(error)
-        @error = error
-      end
-
-      def ok
-        @ok_called = true
-      end
 
       def err
         @err_called = true
-        @result = yield @error
+        if !@result.ok?
+          @mapped_result = yield @result.unwrap_err!
+        end
       end
 
-      def result
+      def mapped_result
         if @ok_called && @err_called
-          @result
+          @mapped_result
         else
           fail "Must match on both ok and err results"
         end
