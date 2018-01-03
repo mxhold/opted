@@ -18,7 +18,8 @@ module Opted
       end
 
       def match(&block)
-        match = Match.new(self)
+        match = OkMatch.new(@value)
+        match = MatchWithBranchChecking.new(match)
         match.instance_eval(&block)
         match.mapped_result
       end
@@ -42,34 +43,59 @@ module Opted
       end
 
       def match(&block)
-        match = Match.new(self)
+        match = ErrMatch.new(@error)
+        match = MatchWithBranchChecking.new(match)
         match.instance_eval(&block)
         match.mapped_result
       end
     end
 
-    class Match
-      def initialize(result)
-        @result = result
+    class OkMatch
+      attr_reader :mapped_result
+      def initialize(value)
+        @value = value
       end
 
       def ok
-        @ok_called = true
-        if @result.ok?
-          @mapped_result = yield @result.unwrap!
-        end
+        @mapped_result = yield @value
       end
 
       def err
+      end
+    end
+
+    class ErrMatch
+      attr_reader :mapped_result
+      def initialize(error)
+        @error = error
+      end
+
+      def ok
+      end
+
+      def err
+        @mapped_result = yield @error
+      end
+    end
+
+    class MatchWithBranchChecking
+      def initialize(match)
+        @match = match
+      end
+
+      def ok(&block)
+        @ok_called = true
+        @match.ok(&block)
+      end
+
+      def err(&block)
         @err_called = true
-        if !@result.ok?
-          @mapped_result = yield @result.unwrap_err!
-        end
+        @match.err(&block)
       end
 
       def mapped_result
         if @ok_called && @err_called
-          @mapped_result
+          @match.mapped_result
         else
           fail "Must match on both ok and err results"
         end
