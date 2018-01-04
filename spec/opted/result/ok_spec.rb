@@ -1,13 +1,13 @@
 RSpec.describe Opted::Result::Ok do
   describe "#ok?" do
     it "is true" do
-      expect(Opted::Result::Ok.new(1).ok?).to eql(true)
+      expect(Opted::Result::Ok.new(1).ok?).to eq(true)
     end
   end
 
   describe "#unwrap!" do
     it "returns the value" do
-      expect(Opted::Result::Ok.new(1).unwrap!).to eql(1)
+      expect(Opted::Result::Ok.new(1).unwrap!).to eq(1)
     end
   end
 
@@ -26,7 +26,7 @@ RSpec.describe Opted::Result::Ok do
         err { fail "unreachable" }
       end
 
-      expect(result).to eql(2)
+      expect(result).to eq(2)
     end
 
     it "fails unless both ok and err block provided" do

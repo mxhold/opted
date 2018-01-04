@@ -1,7 +1,7 @@
 RSpec.describe Opted::Result::Err do
   describe "#ok?" do
     it "is false" do
-      expect(Opted::Result::Err.new(:error).ok?).to eql(false)
+      expect(Opted::Result::Err.new(:error).ok?).to eq(false)
     end
   end
 
@@ -15,7 +15,7 @@ RSpec.describe Opted::Result::Err do
 
   describe "#unwrap_err!" do
     it "returns the error" do
-      expect(Opted::Result::Err.new(:whoops).unwrap_err!).to eql(:whoops)
+      expect(Opted::Result::Err.new(:whoops).unwrap_err!).to eq(:whoops)
     end
   end
 
@@ -26,7 +26,7 @@ RSpec.describe Opted::Result::Err do
         err { |error| "error is #{error}" }
       end
 
-      expect(result).to eql("error is whoops")
+      expect(result).to eq("error is whoops")
     end
 
     it "fails unless both ok and err block provided" do
