@@ -59,6 +59,23 @@ RSpec.describe Opted::Result::Err do
     end
   end
 
+  describe "#map" do
+    it "returns itself with no changes" do
+      err = Opted::Result::Err.new(:whoops)
+      result = err.map { |value| fail "unreachable" }
+      expect(result).to equal(err)
+    end
+  end
+
+  describe "#map_err" do
+    it "returns an Err with an error of the result of running the provided block without mutating the original Err" do
+      err = Opted::Result::Err.new(:whoops)
+      result = err.map_err { |error| error.upcase }
+      expect(result.unwrap_err!).to eq(:WHOOPS)
+      expect(err.unwrap_err!).to eq(:whoops)
+    end
+  end
+
   describe "#match" do
     it "runs the err block" do
       result = Opted::Result::Err.new(:whoops).match do

@@ -26,6 +26,14 @@ module Opted
         @error
       end
 
+      def map
+        self
+      end
+
+      def map_err
+        Err.new(yield @error)
+      end
+
       def match(&block)
         match = ErrMatch.new(@error)
         match = MatchWithBranchChecking.new(match)

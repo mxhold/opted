@@ -59,6 +59,23 @@ RSpec.describe Opted::Result::Ok do
     end
   end
 
+  describe "#map" do
+    it "returns an Ok with a value of the result of running the provided block without mutating the original Ok" do
+      ok = Opted::Result::Ok.new(1)
+      result = ok.map { |value| value + 1 }
+      expect(result.unwrap!).to eq(2)
+      expect(ok.unwrap!).to eq(1)
+    end
+  end
+
+  describe "#map_err" do
+    it "returns itself with no changes" do
+      ok = Opted::Result::Ok.new(1)
+      result = ok.map_err { |error| fail "unreachable" }
+      expect(result).to equal(ok)
+    end
+  end
+
   describe "#match" do
     it "runs the ok block" do
       result = Opted::Result::Ok.new(1).match do

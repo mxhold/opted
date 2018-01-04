@@ -26,6 +26,14 @@ module Opted
         fail UnwrapError.new("Called #unwrap_err! on #{inspect}")
       end
 
+      def map
+        Ok.new(yield @value)
+      end
+
+      def map_err
+        self
+      end
+
       def match(&block)
         match = OkMatch.new(@value)
         match = MatchWithBranchChecking.new(match)
