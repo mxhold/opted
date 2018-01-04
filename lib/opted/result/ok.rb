@@ -5,6 +5,11 @@ module Opted
         @value = value
       end
 
+      def ==(other)
+        other.is_a?(Ok) && @value == other.unwrap!
+      end
+      alias_method :eql?, :==
+
       def ok?
         true
       end

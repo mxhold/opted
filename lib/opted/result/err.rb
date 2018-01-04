@@ -5,6 +5,11 @@ module Opted
         @error = error
       end
 
+      def ==(other)
+        other.is_a?(Err) && @error == other.unwrap_err!
+      end
+      alias_method :eql?, :==
+
       def ok?
         false
       end

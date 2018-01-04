@@ -1,4 +1,38 @@
 RSpec.describe Opted::Result::Err do
+  describe "#==" do
+    context "two Err with same error" do
+      it "is true" do
+        err1 = Opted::Result::Err.new(:error1)
+        err2 = Opted::Result::Err.new(:error1)
+        expect(err1 == err2).to eq(true)
+      end
+    end
+
+    context "two Err with different error" do
+      it "is false" do
+        err1 = Opted::Result::Err.new(:error1)
+        err2 = Opted::Result::Err.new(:error2)
+        expect(err1 == err2).to eq(false)
+      end
+    end
+
+    context "Err and Ok" do
+      it "is false" do
+        err = Opted::Result::Err.new(:error1)
+        ok = Opted::Result::Ok.new(1)
+        expect(err == ok).to eq(false)
+      end
+    end
+  end
+
+  describe "#eql?" do
+    it "is equivalent to #==" do
+      err1 = Opted::Result::Err.new(:error1)
+      err2 = Opted::Result::Err.new(:error1)
+      expect(err1).to eql(err2)
+    end
+  end
+
   describe "#ok?" do
     it "is false" do
       expect(Opted::Result::Err.new(:error).ok?).to eq(false)
