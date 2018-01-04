@@ -39,6 +39,12 @@ RSpec.describe Opted::Result::Ok do
     end
   end
 
+  describe "#err?" do
+    it "is false" do
+      expect(Opted::Result::Ok.new(1).err?).to eq(false)
+    end
+  end
+
   describe "#unwrap!" do
     it "returns the value" do
       expect(Opted::Result::Ok.new(1).unwrap!).to eq(1)

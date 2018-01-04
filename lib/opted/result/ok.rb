@@ -14,6 +14,10 @@ module Opted
         true
       end
 
+      def err?
+        false
+      end
+
       def unwrap!
         @value
       end

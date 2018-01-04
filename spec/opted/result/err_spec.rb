@@ -39,6 +39,12 @@ RSpec.describe Opted::Result::Err do
     end
   end
 
+  describe "#err?" do
+    it "is true" do
+      expect(Opted::Result::Err.new(:error).err?).to eq(true)
+    end
+  end
+
   describe "#unwrap!" do
     it "raises an error" do
       expect do

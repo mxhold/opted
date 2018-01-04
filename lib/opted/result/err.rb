@@ -14,6 +14,10 @@ module Opted
         false
       end
 
+      def err?
+        true
+      end
+
       def unwrap!
         fail UnwrapError.new("Called #unwrap! on #{inspect}")
       end
