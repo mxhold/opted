@@ -34,6 +34,10 @@ module Opted
         self
       end
 
+      def unwrap_or(_other_value)
+        unwrap!
+      end
+
       def match(&block)
         match = OkMatch.new(unwrap!)
         match = MatchWithBranchChecking.new(match)

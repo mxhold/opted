@@ -76,6 +76,13 @@ RSpec.describe Opted::Result::Err do
     end
   end
 
+  describe "#unwrap_or" do
+    it "returns the provided value" do
+      err = Opted::Result::Err.new(:whoops)
+      expect(err.unwrap_or(2)).to eq(2)
+    end
+  end
+
   describe "#match" do
     it "runs the err block" do
       result = Opted::Result::Err.new(:whoops).match do

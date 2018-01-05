@@ -76,6 +76,13 @@ RSpec.describe Opted::Result::Ok do
     end
   end
 
+  describe "#unwrap_or" do
+    it "returns the wrapped value" do
+      ok = Opted::Result::Ok.new(1)
+      expect(ok.unwrap_or(2)).to eq(1)
+    end
+  end
+
   describe "#match" do
     it "runs the ok block" do
       result = Opted::Result::Ok.new(1).match do

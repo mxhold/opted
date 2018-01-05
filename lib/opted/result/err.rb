@@ -34,6 +34,10 @@ module Opted
         Err.new(yield unwrap_err!)
       end
 
+      def unwrap_or(other_value)
+        other_value
+      end
+
       def match(&block)
         match = ErrMatch.new(unwrap_err!)
         match = MatchWithBranchChecking.new(match)
