@@ -6,7 +6,7 @@ module Opted
       end
 
       def ==(other)
-        other.is_a?(Ok) && @value == other.unwrap!
+        other.is_a?(Ok) && unwrap! == other.unwrap!
       end
       alias_method :eql?, :==
 
@@ -27,7 +27,7 @@ module Opted
       end
 
       def map
-        Ok.new(yield @value)
+        Ok.new(yield unwrap!)
       end
 
       def map_err
@@ -35,7 +35,7 @@ module Opted
       end
 
       def match(&block)
-        match = OkMatch.new(@value)
+        match = OkMatch.new(unwrap!)
         match = MatchWithBranchChecking.new(match)
         match.instance_eval(&block)
         match.mapped_result

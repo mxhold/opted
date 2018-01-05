@@ -6,7 +6,7 @@ module Opted
       end
 
       def ==(other)
-        other.is_a?(Err) && @error == other.unwrap_err!
+        other.is_a?(Err) && unwrap_err! == other.unwrap_err!
       end
       alias_method :eql?, :==
 
@@ -31,11 +31,11 @@ module Opted
       end
 
       def map_err
-        Err.new(yield @error)
+        Err.new(yield unwrap_err!)
       end
 
       def match(&block)
-        match = ErrMatch.new(@error)
+        match = ErrMatch.new(unwrap_err!)
         match = MatchWithBranchChecking.new(match)
         match.instance_eval(&block)
         match.mapped_result
