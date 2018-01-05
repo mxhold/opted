@@ -38,6 +38,22 @@ module Opted
         unwrap!
       end
 
+      def and(other)
+        other
+      end
+
+      def and_then
+        yield unwrap!
+      end
+
+      def or(_other)
+        self
+      end
+
+      def or_else
+        self
+      end
+
       def match(&block)
         match = OkMatch.new(unwrap!)
         match = MatchWithBranchChecking.new(match)

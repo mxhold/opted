@@ -83,6 +83,37 @@ RSpec.describe Opted::Result::Err do
     end
   end
 
+  describe "#and" do
+    it "returns self" do
+      err = Opted::Result::Err.new(:whoops)
+      expect(err.and(Opted::Result::Ok.new(1))).to eq(err)
+    end
+  end
+
+  describe "#and_then" do
+    it "returns self without calling the provided block" do
+      err = Opted::Result::Err.new(:whoops)
+      result = err.and_then { |_| fail "unreachable" }
+      expect(result).to eq(err)
+    end
+  end
+
+  describe "#or" do
+    it "returns the provided argument" do
+      err1 = Opted::Result::Err.new(:error1)
+      err2 = Opted::Result::Err.new(:error2)
+      expect(err1.or(err2)).to eq(err2)
+    end
+  end
+
+  describe "#or_else" do
+    it "returns the result of calling the provided block with the wrapped error" do
+      err = Opted::Result::Err.new(:whoops)
+      result = err.or_else { |error| error.upcase }
+      expect(result).to eq(:WHOOPS)
+    end
+  end
+
   describe "#match" do
     it "runs the err block" do
       result = Opted::Result::Err.new(:whoops).match do

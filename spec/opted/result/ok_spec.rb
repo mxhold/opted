@@ -83,6 +83,37 @@ RSpec.describe Opted::Result::Ok do
     end
   end
 
+  describe "#and" do
+    it "returns the provided argument" do
+      ok = Opted::Result::Ok.new(1)
+      expect(ok.and(Opted::Result::Ok.new(2).unwrap!)).to eq(2)
+    end
+  end
+
+  describe "#and_then" do
+    it "returns the result of calling the provided block with the wrapped value" do
+      ok = Opted::Result::Ok.new(1)
+      result = ok.and_then { |value| value + 1 }
+      expect(result).to eq(2)
+    end
+  end
+
+  describe "#or" do
+    it "returns self" do
+      ok = Opted::Result::Ok.new(1)
+      result = ok.or(Opted::Result::Ok.new(2))
+      expect(result).to eq(ok)
+    end
+  end
+
+  describe "#or_else" do
+    it "returns self" do
+      ok = Opted::Result::Ok.new(1)
+      result = ok.or_else { |_error| fail "unreachable" }
+      expect(result).to eq(ok)
+    end
+  end
+
   describe "#match" do
     it "runs the ok block" do
       result = Opted::Result::Ok.new(1).match do

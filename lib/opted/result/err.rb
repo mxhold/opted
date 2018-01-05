@@ -38,6 +38,22 @@ module Opted
         other_value
       end
 
+      def and(_other)
+        self
+      end
+
+      def and_then
+        self
+      end
+
+      def or(other)
+        other
+      end
+
+      def or_else
+        yield unwrap_err!
+      end
+
       def match(&block)
         match = ErrMatch.new(unwrap_err!)
         match = MatchWithBranchChecking.new(match)
