@@ -40,6 +40,8 @@ begin
   Err.new(:whoops).unwrap!
 rescue Opted::Result::UnwrapError => e
   assert e.message =~ /Called #unwrap! on #<Opted::Result::Err:.* @error=:whoops>/
+else
+  fail
 end
 
 result = Ok.new(1)
