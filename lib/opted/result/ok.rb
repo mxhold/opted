@@ -2,7 +2,11 @@ module Opted
   module Result
     class Ok
       def initialize(value)
-        @value = value
+        if value.nil?
+          fail ArgumentError.new("can't wrap nil")
+        else
+          @value = value
+        end
       end
 
       def ==(other)

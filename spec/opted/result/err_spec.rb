@@ -1,4 +1,12 @@
 RSpec.describe Opted::Result::Err do
+  describe ".new" do
+    it "cannot wrap nil" do
+      expect do
+        Opted::Result::Err.new(nil)
+      end.to raise_error(ArgumentError, /can't wrap nil/)
+    end
+  end
+
   describe "#==" do
     context "two Err with same error" do
       it "is true" do

@@ -2,7 +2,11 @@ module Opted
   module Result
     class Err
       def initialize(error)
-        @error = error
+        if error.nil?
+          fail ArgumentError.new("can't wrap nil")
+        else
+          @error = error
+        end
       end
 
       def ==(other)

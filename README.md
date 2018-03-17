@@ -52,6 +52,23 @@ unwrapped_result = result.match do
 end
 
 assert unwrapped_result == 2
+
+# disallows wrapping nil
+begin
+  Ok.new(nil)
+rescue ArgumentError => e
+  assert e.message =~ /can't wrap nil/
+else
+  fail
+end
+
+begin
+  Err.new(nil)
+rescue ArgumentError => e
+  assert e.message =~ /can't wrap nil/
+else
+  fail
+end
 ```
 
 ## Development
