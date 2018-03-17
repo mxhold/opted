@@ -59,7 +59,7 @@ module Opted
       end
 
       def match(&block)
-        Matcher.from_error(unwrap_err!).match(&block)
+        Match.match_error(unwrap_err!, &block)
       end
     end
   end
