@@ -1,13 +1,33 @@
 module Opted
   module Result
+    class Matcher
+      def self.from_value(value)
+        new(OkMatch.new(value))
+      end
+
+      def self.from_error(error)
+        new(ErrMatch.new(error))
+      end
+
+      def initialize(match)
+        @match = match
+      end
+
+      def match(&block)
+        match = MatchWithBranchChecking.new(@match)
+        match.instance_eval(&block)
+        match.mapped_value_or_error
+      end
+    end
+
     class OkMatch
-      attr_reader :mapped_result
+      attr_reader :mapped_value_or_error
       def initialize(value)
         @value = value
       end
 
       def ok
-        @mapped_result = yield @value
+        @mapped_value_or_error = yield @value
       end
 
       def err
@@ -15,7 +35,7 @@ module Opted
     end
 
     class ErrMatch
-      attr_reader :mapped_result
+      attr_reader :mapped_value_or_error
       def initialize(error)
         @error = error
       end
@@ -24,7 +44,7 @@ module Opted
       end
 
       def err
-        @mapped_result = yield @error
+        @mapped_value_or_error = yield @error
       end
     end
 
@@ -43,9 +63,9 @@ module Opted
         @match.err(&block)
       end
 
-      def mapped_result
+      def mapped_value_or_error
         if @ok_called && @err_called
-          @match.mapped_result
+          @match.mapped_value_or_error
         else
           fail "Must match on both ok and err results"
         end

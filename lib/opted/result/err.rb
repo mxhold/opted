@@ -59,10 +59,7 @@ module Opted
       end
 
       def match(&block)
-        match = ErrMatch.new(unwrap_err!)
-        match = MatchWithBranchChecking.new(match)
-        match.instance_eval(&block)
-        match.mapped_result
+        Matcher.from_error(unwrap_err!).match(&block)
       end
     end
   end

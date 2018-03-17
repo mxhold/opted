@@ -59,10 +59,7 @@ module Opted
       end
 
       def match(&block)
-        match = OkMatch.new(unwrap!)
-        match = MatchWithBranchChecking.new(match)
-        match.instance_eval(&block)
-        match.mapped_result
+        Matcher.from_value(unwrap!).match(&block)
       end
     end
   end
