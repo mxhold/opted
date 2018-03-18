@@ -1,5 +1,6 @@
 module Opted
   module Result
+    # Value object that represents an error result
     class Err
       # @param error [Object] a non-nil error to wrap
       # @raise [ArgumentError] if provided error is nil

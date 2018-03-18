@@ -1,8 +1,8 @@
 # Opted
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/opted`. To experiment with that code, run `bin/console` for an interactive prompt.
+Inspired by [Rust](https://www.rust-lang.org/en-US/)'s [Result](https://doc.rust-lang.org/std/result/index.html) type, this gem provides basic value types to represent success (`Ok`) and failure (`Err`) results.
 
-TODO: Delete this and the text above, and describe your gem
+**Note**: this is mostly experimental. Since I've only used this for trivial things so far, I suggest using caution before using this anywhere important.
 
 ## Installation
 
@@ -15,10 +15,6 @@ gem 'opted'
 And then execute:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install opted
 
 ## Usage
 

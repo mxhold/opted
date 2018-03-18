@@ -1,5 +1,6 @@
 module Opted
   module Result
+    # Value object that represents a successful result
     class Ok
       # @param value [Object] a non-nil value to wrap
       # @raise [ArgumentError] if provided value is nil

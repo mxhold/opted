@@ -9,19 +9,10 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Max Holder"]
   spec.email         = ["mxhold@gmail.com"]
 
-  spec.summary       = "Option and Result types in Ruby"
-  spec.description   = "Provides Option and Result types (like in Rust) in idiomatic Ruby"
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = "Result type in Ruby"
+  spec.description   = "Provides Result type (like in Rust) in idiomatic Ruby"
+  spec.homepage      = "https://github.com/mxhold/opted"
   spec.license       = "MIT"
-
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
-  if spec.respond_to?(:metadata)
-    spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
-  else
-    raise "RubyGems 2.0 or newer is required to protect against " \
-      "public gem pushes."
-  end
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})

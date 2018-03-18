@@ -109,7 +109,7 @@ module Opted
       #   Ok.new(1).or(Err.new(:err)) # => Ok.new(1)
       #   Err.new(:e1).or(Ok.new(1)) # => Ok.new(:1)
       #   Err.new(:e1).or(Err.new(:e2)) # => Err.new(:e2)
-      # @param [Ok, Err] other result
+      # @param other [Ok, Err] other result
       # @return [Ok, Err] self or other result
       # @note Arguments provided will be eagerly evaluated. Use {#or_else} for
       #   lazy evaluation.
