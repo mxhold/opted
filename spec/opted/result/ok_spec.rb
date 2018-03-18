@@ -1,3 +1,5 @@
+require "opted/result/abstract_result"
+
 RSpec.describe Opted::Result::Ok do
   it "implements exactly the methods defined in AbstractResult" do
     expect(Opted::Result::Ok.instance_methods).to match_array(Opted::Result::AbstractResult.instance_methods)

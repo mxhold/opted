@@ -1,4 +1,3 @@
-require "opted/result/abstract_result"
 require "opted/result/ok"
 require "opted/result/err"
 require "opted/result/match"
