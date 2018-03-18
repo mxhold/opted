@@ -2,6 +2,8 @@
 
 Inspired by [Rust](https://www.rust-lang.org/en-US/)'s [Result](https://doc.rust-lang.org/std/result/index.html) type, this gem provides basic value types to represent success (`Ok`) and failure (`Err`) results.
 
+- [API Documentation](http://www.rubydoc.info/gems/opted/1.0.0/Opted/Result/AbstractResult)
+
 **Note**: this is mostly experimental. Since I've only used this for trivial things so far, I suggest using caution before using this anywhere important.
 
 ## Installation
