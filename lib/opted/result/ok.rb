@@ -27,7 +27,7 @@ module Opted
       end
 
       def unwrap_err!
-        fail UnwrapError.new("Called #unwrap_err! on #{inspect}")
+        fail UnwrapError.new(__method__, inspect)
       end
 
       def map

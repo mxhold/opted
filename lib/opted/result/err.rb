@@ -23,7 +23,7 @@ module Opted
       end
 
       def unwrap!
-        fail UnwrapError.new("Called #unwrap! on #{inspect}")
+        fail UnwrapError.new(__method__, inspect)
       end
 
       def unwrap_err!
